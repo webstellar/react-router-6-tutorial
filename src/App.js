@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Products from "./pages/Products";
+import Error from "./pages/Error";
 
 //learning react-router 6
 //Steps
@@ -32,6 +33,7 @@ import Products from "./pages/Products";
 //While for best practice a component should act as the shared component that inserts common contents on all pages eg.navigation menu
 //Usually it's the Layout component
 //Layout.jsx will import {Outlet, Link} from "react-router-dom"
+//Link component allows us to navigate around our component
 //With <Link to="/">Home</Link> it references home and can be set for others
 /* <nav>
       <ul>
@@ -46,15 +48,34 @@ import Products from "./pages/Products";
     <Outlet/>
 */
 //Where <Outlet /> renders the current page
+//To create nesting (where products will display as /products/{product} or localhost:3000/home/about or /services/telemarketing) do the following
+//Make the parent Route become an opening and closing Route instead of a self-closing route
+/*
+<BrowserRoute>
+  <Routes>
+    <Route path="/" element={<Home />}>
+      <Route path="/about" element={<About />} />
+      <Route path="/products" element={<Products />} />
+      <Route path="*" element={<Error />} />
+    </Route>
+  </Routes>
+</BroswerRoute>
+*/
 
 const App = () => {
   return (
     <BrowserRouter>
+      <nav>Our NavBar</nav>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/about" element={<About />} />
+        <Routes>
+          <Route path="/" element={<Home />}>
+            <Route path="/about" element={<About />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="*" element={<Error />} />
+          </Route>
+        </Routes>
       </Routes>
+      <footer>our footer</footer>
     </BrowserRouter>
   );
 };
